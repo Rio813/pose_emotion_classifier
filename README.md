@@ -3,12 +3,13 @@
 
 ## 1基本构成
 
-![image-20230307201047707](assets/image-20230307201047707.png)
+<img src="assets/image-20230314144232781.png" alt="image-20230314144232781" style="zoom: 150%;" />
 
 * 步态数据存储data：存放h5格式的步态数据，数据集形式为二维矩阵。
+* 视频存储路径video：存放需要进行预测的数据。
 * 模型存储model：存放训练好的不同模型，可以根据需要选用。
 * 情感预测包predictions：主要的推理模块，包含一个情感预测类。
-* 测试脚本main.py：使用方法举例
+* 测试脚本main.py：使用方法举例。
 
 ------
 
@@ -20,10 +21,10 @@
 import predictions.classPred
 ```
 
-> 构造classPred对象，形参填入模型路径和步态数据路径
+> 构造classPred对象，形参填入模型路径和视频路径
 
 ```python
-pred = classPred.Pred('epoch395_acc81.25_model.pth.tar', 'features.h5')
+pred = classPred.Pred('epoch395_acc81.25_model.pth.tar', 'demo.mp4')
 ```
 
 > 使用类成员方法generate_data生成加工后的数据
@@ -40,7 +41,7 @@ label = pred.generate_predictions(data)
 
 > 获取情感
 
-```
+```python
 print(label)
 ```
 
@@ -51,3 +52,7 @@ print(label)
 ![image-20230307202509336](assets/image-20230307202509336.png)
 
 ![image-20230307202647724](assets/image-20230307202647724.png)
+
+![image-20230314144110889](assets/image-20230314144110889.png)
+
+![image-20230314144128564](assets/image-20230314144128564.png)

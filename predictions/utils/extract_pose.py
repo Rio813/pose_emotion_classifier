@@ -12,6 +12,14 @@ def get_pose_data(video_name):
     base_path = os.path.dirname(os.path.realpath(__file__))
     video_path =  os.path.join(base_path, '..\\..\\video\\') + video_name
     cap = cv2.VideoCapture(video_path)
+    # 创建VideoWriter对象
+    video_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+    video_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+    fps = int(cap.get(cv2.CAP_PROP_FPS))
+    frame_size = (video_width, video_height)
+    fourcc = cv2.VideoWriter_fourcc(*"mp4v")  # VideoWriter_fourcc为视频编解码器
+
+    out = cv2.VideoWriter(os.path.join(base_path, '..\\..\\video\\') + "output_" + video_name, fourcc, fps, frame_size, True)  # 创建输出视频文件对象
     # Create an empty numpy array for storing pose data
     pose_data = np.empty((int(cap.get(cv2.CAP_PROP_FRAME_COUNT)), 48), dtype=float)
     with mp_pose.Pose(
@@ -151,6 +159,9 @@ def get_pose_data(video_name):
             # Display the annotated image
             cv2.imshow('MediaPipe Pose', cv2.flip(image, 1))
 
+            # 将image对象转换为视频帧
+            # image = image.resize((800, 600))
+            out.write(image)
             # Update the frame count
             frame_count += 1
 
