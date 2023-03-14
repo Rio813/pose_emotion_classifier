@@ -1,8 +1,5 @@
 # pose_emotion_classifier
 
-------
-
-
 
 ## 1基本构成
 
@@ -46,6 +43,8 @@ label = pred.generate_predictions(data)
 ```
 print(label)
 ```
+
+----
 
 ## 3测试运行
 
