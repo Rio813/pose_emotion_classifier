@@ -1,12 +1,13 @@
 import sys
 import argparse
 import os
-from predictions.utils import loader, processor
+from predictions.utils import loader, processor, extract_pose
 from predictions.net import classifier
 
 
 class Pred:
-    def __init__(self, model_path, data_path):
+    def __init__(self, model_path, video_name, data_path="example.h5"):
+        self.video_name = video_name
         self.base_path = os.path.dirname(os.path.realpath(__file__))
         self.data_path = os.path.join(self.base_path, '..\\data\\') + data_path
         self.model_path = os.path.join(self.base_path, '..\\model\\') + model_path
@@ -28,13 +29,8 @@ class Pred:
         pr.model.eval()
         return pr
 
-    #def load_model(self):
-        #self.model.load_state_dict(torch.load(self.model_path))
-        #self.model.apply(weights_init)
-        #self.model.cuda(torch.device("cuda:0"))
-        #self.model.eval()
-
     def generate_data(self):
+        extract_pose.get_pose_data(self.video_name)
         data = loader.load_data(self.data_path, self.coords, self.joints, cycles=1)
         return data
 
